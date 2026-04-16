@@ -6,7 +6,14 @@ ENV WINEARCH=win64
 
 RUN dpkg --add-architecture i386 && \
     apt update && \
-    apt install -y wget gnupg2 software-properties-common ca-certificates
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
+    apt-get install -y \
+    wget \
+    gnupg \
+    ca-certificates \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -pm755 /etc/apt/keyrings && \
     wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && \
