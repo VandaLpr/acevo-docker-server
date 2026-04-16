@@ -7,6 +7,13 @@ echo "========================================"
 export WINEPREFIX="/wine"
 export WINEARCH="win64"
 
+# Install VC runtime (only once)
+if [ ! -f "/wine/.vcrun_installed" ]; then
+    echo "Installing VC runtime..."
+    winetricks -q vcrun2019
+    touch /wine/.vcrun_installed
+fi
+
 cd $DATA_DIR
 
 # Provjera servera
