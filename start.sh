@@ -1,21 +1,22 @@
 #!/bin/bash
 
 echo "========================================"
-echo "   AC EVO Dedicated Server (Docker)"
+echo "   AC EVO Docker Server"
 echo "========================================"
 
-# Init Wine samo prvi put
-if [ ! -d "/wine/drive_c" ]; then
-    echo "Initializing Wine..."
-    xvfb-run wineboot
-    sleep 5
+export WINEPREFIX="/wine"
+export WINEARCH="win64"
 
-    echo "Installing VC runtime..."
-    winetricks -q vcrun2019
+cd $DATA_DIR
+
+# Provjera servera
+if [ ! -f "AssettoCorsaEVOServer.exe" ]; then
+    echo "ERROR: Server files not found in $DATA_DIR"
+    echo "Please mount your server files!"
+    exit 1
 fi
 
-cd /server
-
+# Ako nema args
 if [ -z "$SERVER_ARGS" ]; then
     echo "ERROR: SERVER_ARGS not set!"
     exit 1
@@ -24,9 +25,10 @@ fi
 echo "Starting server with args:"
 echo "$SERVER_ARGS"
 
+# Loop (auto restart)
 while true
 do
-    xvfb-run wine AssettoCorsaEVOServer.exe $SERVER_ARGS
+    wine AssettoCorsaEVOServer.exe $SERVER_ARGS
     echo "Server crashed, restarting in 10s..."
     sleep 10
 done
