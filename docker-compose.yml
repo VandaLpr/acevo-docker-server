@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  acevo:
+    image: ghcr.io/YOUR_USERNAME/acevo-server:latest
+    container_name: acevo
+    ports:
+      - "9700:9700/tcp"
+      - "9700:9700/udp"
+    volumes:
+      - ./serverfiles:/server
+    environment:
+      - SERVER_ARGS=-serverconfig XXX -seasondefinition XXX
+    restart: unless-stopped
