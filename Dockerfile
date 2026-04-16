@@ -1,37 +1,30 @@
-FROM ubuntu:22.04
+FROM ich777/winehq-baseimage
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV WINEPREFIX=/wine
-ENV WINEARCH=win64
+LABEL org.opencontainers.image.authors="marko@fabulic.eu"
+LABEL org.opencontainers.image.source="https://github.com/Vandalpr/acevo-docker-server"
 
-RUN dpkg --add-architecture i386 && \
-    apt-get update && \
-    apt-get install -y \
-    wget \
-    gnupg \
-    ca-certificates \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists/*
+ENV DATA_DIR="/acevo"
+ENV UMASK=000
+ENV UID=99
+ENV GID=100
+ENV USER="acevo"
+ENV DATA_PERM=770
 
-RUN mkdir -pm755 /etc/apt/keyrings && \
-    wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && \
-    wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+# Create data dir + user
+RUN mkdir $DATA_DIR && \
+    useradd -d $DATA_DIR -s /bin/bash $USER && \
+    chown -R $USER $DATA_DIR && \
+    ulimit -n 2048
 
-RUN apt update && \
-    apt install -y --install-recommends \
-    winehq-stable \
-    winetricks \
-    xvfb \
-    cabextract \
-    unzip
+# Copy scripts
+ADD /scripts/ /opt/scripts/
+RUN chmod -R 770 /opt/scripts/
 
-RUN mkdir /server /wine
-WORKDIR /server
+WORKDIR $DATA_DIR
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
+# Ports
 EXPOSE 9700/tcp
 EXPOSE 9700/udp
 
-CMD ["/start.sh"]
+# Start
+ENTRYPOINT ["/opt/scripts/start.sh"]
