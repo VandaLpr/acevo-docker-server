@@ -5,8 +5,6 @@ ENV WINEPREFIX=/wine
 ENV WINEARCH=win64
 
 RUN dpkg --add-architecture i386 && \
-    apt update && \
-RUN dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install -y \
     wget \
