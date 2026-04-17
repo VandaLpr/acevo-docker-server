@@ -7,9 +7,8 @@ echo "========================================"
 export WINEPREFIX="/wine"
 export WINEARCH="win64"
 
-# Create required folders
+# Create wine prefix if needed
 mkdir -p /wine
-mkdir -p /logs
 
 cd $DATA_DIR
 
@@ -19,22 +18,19 @@ if [ ! -f "AssettoCorsaEVOServer.exe" ]; then
     exit 1
 fi
 
-# Check args file
-if [ ! -f "/acevo/args.txt" ]; then
-    echo "ERROR: args.txt not found in /acevo"
+# Check SERVER_ARGS
+if [ -z "$SERVER_ARGS" ]; then
+    echo "ERROR: SERVER_ARGS not set!"
     exit 1
 fi
 
-# Load args
-ARGS=$(cat /acevo/args.txt)
-
 echo "Starting server with args:"
-echo "$ARGS"
+echo "$SERVER_ARGS"
 
-# Start server (with logging)
+# Start server loop
 while true
 do
-    wine AssettoCorsaEVOServer.exe $ARGS | tee -a /logs/server.log
-    echo "Server crashed, restarting in 10s..."
+    wine AssettoCorsaEVOServer.exe $SERVER_ARGS
+    echo "Server stopped/crashed, restarting in 10s..."
     sleep 10
 done
