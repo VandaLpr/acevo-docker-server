@@ -38,7 +38,8 @@ echo "$SERVER_ARGS"
 # Loop with logging
 while true
 do
-    wine AssettoCorsaEVOServer.exe $SERVER_ARGS | tee -a /logs/server.log
+    ARGS=$(cat /acevo/args.txt)
+    wine AssettoCorsaEVOServer.exe $ARGS | tee -a /logs/server.log
     echo "Server crashed, restarting in 10s..."
     sleep 10
 done
