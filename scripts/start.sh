@@ -14,7 +14,7 @@ mkdir -p /logs
 # Install VC runtime (only once)
 if [ ! -f "/wine/.vcrun_installed" ]; then
     echo "Installing VC runtime..."
-    winetricks -q vcrun2019
+    winetricks -q vcrun2019 || true
     touch /wine/.vcrun_installed
 fi
 
