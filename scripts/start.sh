@@ -11,13 +11,6 @@ export WINEARCH="win64"
 mkdir -p /wine
 mkdir -p /logs
 
-# Install VC runtime (only once)
-if [ ! -f "/wine/.vcrun_installed" ]; then
-    echo "Installing VC runtime..."
-    winetricks -q vcrun2019 || true
-    touch /wine/.vcrun_installed
-fi
-
 cd $DATA_DIR
 
 # Check server files
@@ -26,19 +19,21 @@ if [ ! -f "AssettoCorsaEVOServer.exe" ]; then
     exit 1
 fi
 
-# Check args
-if [ -z "$SERVER_ARGS" ]; then
-    echo "ERROR: SERVER_ARGS not set!"
+# Check args file
+if [ ! -f "/acevo/args.txt" ]; then
+    echo "ERROR: args.txt not found in /acevo"
     exit 1
 fi
 
-echo "Starting server with args:"
-echo "$SERVER_ARGS"
+# Load args
+ARGS=$(cat /acevo/args.txt)
 
-# Loop with logging
+echo "Starting server with args:"
+echo "$ARGS"
+
+# Start server (with logging)
 while true
 do
-    ARGS=$(cat /acevo/args.txt)
     wine AssettoCorsaEVOServer.exe $ARGS | tee -a /logs/server.log
     echo "Server crashed, restarting in 10s..."
     sleep 10
