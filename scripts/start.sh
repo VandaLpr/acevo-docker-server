@@ -35,7 +35,7 @@ echo "$SERVER_ARGS"
 # Loop (auto restart)
 while true
 do
-    wine AssettoCorsaEVOServer.exe $SERVER_ARGS
+    wine AssettoCorsaEVOServer.exe $SERVER_ARGS >> /logs/server.log 2>&1
     echo "Server crashed, restarting in 10s..."
     sleep 10
 done
