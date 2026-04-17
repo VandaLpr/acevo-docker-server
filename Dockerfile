@@ -10,6 +10,10 @@ ENV GID=100
 ENV USER="acevo"
 ENV DATA_PERM=770
 
+# Install winetricks
+RUN apt-get update && apt-get install -y winetricks && rm -rf /var/lib/apt/lists/*
+
+
 # Create data dir + user
 RUN mkdir $DATA_DIR && \
     useradd -d $DATA_DIR -s /bin/bash $USER && \
