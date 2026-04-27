@@ -19,7 +19,13 @@ mkdir -p /config/logs
 
 # Create empty args file if missing
 if [ ! -f /config/server_args.txt ]; then
-    echo "# Paste your server command here (from launcher)" > /config/server_args.txt
+cat <<EOF > /config/server_args.txt
+# Assetto Corsa EVO Server Args
+# Paste "Copy Command" from launcher below
+
+# Example:
+# -serverconfig XXXXX -seasondefinition XXXXX
+EOF
 fi
 
 cd "$DATA_DIR"
