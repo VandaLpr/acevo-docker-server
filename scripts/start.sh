@@ -14,6 +14,13 @@ LOG_FILE="$LOG_DIR/server.log"
 mkdir -p "$DATA_DIR"
 mkdir -p "$LOG_DIR"
 mkdir -p /wine
+mkdir -p /config/server
+mkdir -p /config/logs
+
+# Create empty args file if missing
+if [ ! -f /config/server_args.txt ]; then
+    echo "# Paste your server command here (from launcher)" > /config/server_args.txt
+fi
 
 cd "$DATA_DIR"
 
