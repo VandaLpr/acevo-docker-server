@@ -44,6 +44,20 @@ Start the container from Unraid UI.
 
 ---
 
+### 5.Updating the Server
+
+This container does NOT include any game server files.
+
+You must update the server manually via Steam:
+
+1. Update the "Assetto Corsa EVO Dedicated Server" in Steam
+2. Copy updated files into `/config/server`
+3. Restart the container
+
+A new version of this Docker container is NOT required for game updates.
+
+---
+
 ## File Structure
 
 /config
