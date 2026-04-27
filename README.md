@@ -44,7 +44,7 @@ Start the container from Unraid UI.
 
 ---
 
-### 5.Updating the Server
+### 5. Updating the Server
 
 This container does NOT include any game server files.
 
@@ -60,11 +60,13 @@ A new version of this Docker container is NOT required for game updates.
 
 ## File Structure
 
+```
 /config
-├── server/ # Server files from Steam
+├── server/            # Server files from Steam
 ├── logs/
-│ └── server.log # Live server log
-└── server_args.txt # Config from launcher
+│   └── server.log     # Live server log
+└── server_args.txt    # Config from launcher
+```
 
 ---
 
