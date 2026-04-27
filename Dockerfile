@@ -15,9 +15,7 @@ RUN apt-get update && apt-get install -y winetricks && rm -rf /var/lib/apt/lists
 
 
 # Create data dir + user
-RUN mkdir $DATA_DIR && \
-    chown -R $USER $DATA_DIR && \
-    ulimit -n 2048
+RUN mkdir -p $DATA_DIR
 
 # Copy scripts
 COPY scripts/ /opt/scripts/
