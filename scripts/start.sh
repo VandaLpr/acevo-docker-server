@@ -43,10 +43,12 @@ if [ ! -f "AssettoCorsaEVOServer.exe" ]; then
     sleep infinity
 fi
 
-# Load args (file ima prioritet)
-if [ -f /config/server_args.txt ]; then
+# ENV variable ima prioritet
+if [ -n "$SERVER_ARGS" ]; then
+    echo "Using SERVER_ARGS variable"
+elif [ -f /config/server_args.txt ]; then
     echo "Using args from /config/server_args.txt"
-    SERVER_ARGS="$(cat /config/server_args.txt)"
+    SERVER_ARGS="$(cat /config/server_args.txt | tr -d '\r')"
 fi
 
 # Check SERVER_ARGS
